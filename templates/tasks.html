@@ -90,6 +90,12 @@
             <dl class="dl-horizontal">
                 <dt><strong>任务描述：</strong></dt>
                 <dd>你的朋友计划去台湾旅行，他首先需要做的是办理台湾通行证和入台证。请帮助他查找在北京办理“台湾通行证”需要准备哪些材料。</dd>
+            </dl>
+            <div>
+                <a class="annotation_link"
+                    href='/search/0/SAT/HIGH/北京办理台湾通行证材料/1/'
+                    target="_blank" onclick="resetTime();">点击这里开始</a>
+            </div>
         </div>
     </div>
     {% for item in tasks %}
@@ -101,9 +107,12 @@
                 <dl class="dl-horizontal">
                     <dt><strong> 任务描述：</strong></dt>
                     <dd> {{item.2}} </dd>
-                <div><a class="annotation_link"
+                </dl>
+                <div>
+                    <a class="annotation_link"
                         href='/search/{{ item.0 }}/{{ item.3 }}/{{ item.4 }}/{{ item.1 }}/1/'
-                        target="_blank" onclick="resetTime();">点击这里开始</a></div>
+                        target="_blank" onclick="resetTime();">点击这里开始</a>
+                </div>
             </div>
 
         </div>

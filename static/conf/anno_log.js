@@ -3,9 +3,12 @@
  * Created by defaultstr on 11/28/14.
  */
 
-if (studentID == "") {
-    studentID = "0";
-}
+var strcookie = document.cookie;
+var arrcookie = strcookie.split("; ");
+var studentID = arrcookie[1].split("=")[1]
+//if (studentID == "") {
+//    studentID = "0";
+//}
 
 var current_page_url = window.location.href;
 var current_site = get_set(current_page_url);
@@ -21,37 +24,12 @@ function get_set(url_str) {
     return ret;
 }
 
-$(function () {
-    if ($("#session_annotation")) {
-        $("#session_annotation").raty('set', {number: 5, starOn: "/static/conf/img/star-on.png", starOff: "/static/conf/img/star-off.png"});
-        $("#session_annotation").raty('score', 1);
-    }
-});
-
-$(function() {
-    if ($("#query_annotation")) {
-        $("#query_annotation").raty('set', {number: 5, starOn: "/static/conf/img/star-on.png", starOff: "/static/conf/img/star-off.png"});
-        $("#query_annotation").raty('score', 1);
-    }
-});
 
 window.onbeforeunload = function (e) {
     return "";
     //return ''
 };
 
-$(function () {
-    $(".annotation_link").click(function () {
-        var node = $(this).get(0);
-        var parent_node = node.parentNode;
-        while (parent_node != null) {
-            if (parent_node.className == "annotation_cell") {
-                $(parent_node).find("img").css("visibility", "visible");
-            }
-            parent_node = parent_node.parentNode;
-        }
-    });
-});
 
 function questionnaire_button_on_click() {
     var text = $("#answer").val();
@@ -117,7 +95,7 @@ function session_over_button_on_click() {
     message += "\tTASK=" + currentTaskID;
     message += "\tACTION=SESSION_ANNOTATION";
     message += "\tINFO:";
-    message += "\tscore="  + score + "\n"
+    message += "\tscore=" + score + "\n"
     if (confirm("ok?")) {
         var encode_str = message;
         var log_url = "http://" + server_site + ":8000/SessionAnnoService/";
@@ -137,7 +115,7 @@ function session_over_button_on_click() {
     }
 }
 
-function click_on_submittimeestimation(){
+function click_on_submittimeestimation() {
     var text = $("#time").html();
     var message = "";
     var client_time = (new Date()).getTime();
@@ -165,7 +143,7 @@ function click_on_submittimeestimation(){
     }
 }
 
-function click_on_submittimeestimation_quiet(){
+function click_on_submittimeestimation_quiet() {
     var text = $("#time").html();
     var message = "";
     var client_time = (new Date()).getTime();
@@ -191,42 +169,166 @@ function click_on_submittimeestimation_quiet(){
     window.onbeforeunload = null;
 }
 
-function click_on_submitoutcome(){
 
-    var text = $("#answer").val();
-    var message = "";
+function begin_calibration(docid) {
     var client_time = (new Date()).getTime();
+    var message = "";
     message += "TIMESTAMP=" + client_time;
     message += "\tUSER=" + studentID;
-    message += "\tTASK=" + currentTaskID;
-    message += "\tACTION=DESCRIPTION";
+    message += "\tJOBID=" + jobid;
+    message += "\tDOCID=" + docid;
+    message += "\tACTION=BEGIN_CALIBRATION";
     message += "\tINFO:";
-    message += "\tanswer=" + text + "\n";
-    var log_url = "http://" + server_site + ":8000/OutcomeService/";
-    if (confirm("Are you confirm that this is your outcome?")) {
-        $.ajax({
-            type: 'POST',
-            url: log_url,
-            data: {message: message},
-            async: false,
-            complete: function (jqXHR, textStatus) {
-                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
-                //should we reset onbeforeunload here?
-                console.log("synchronously flush hallo answer")
-            }
-        });
-        window.onbeforeunload = null;
-        //location.href = "/search/" + currentTaskID + "/" + initQuery + "/1/";
-        location.href = "/annotation/" + currentTaskID + "/";
+    var log_url = "http://" + server_site + ":8000/LogService/"
 
+    $.ajax({
+        type: 'POST',
+        url: log_url,
+        data: {message: message},
+        async: false,
+        complete: function (jqXHR, textStatus) {
+            //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+            //should we reset onbeforeunload here?
+            console.log("synchronously flush hallo answer")
+        }
+    });
+    window.onbeforeunload = null;
+
+
+}
+
+
+function end_calibration() {
+
+    var client_time = (new Date()).getTime();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tDOCID=" + docid;
+    message += "\tACTION=END_CALIBRATION";
+    message += "\tINFO:";
+    var log_url = "http://" + server_site + ":8000/LogService/"
+
+    $.ajax({
+        type: 'POST',
+        url: log_url,
+        data: {message: message},
+        async: false,
+        complete: function (jqXHR, textStatus) {
+            //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+            //should we reset onbeforeunload here?
+            console.log("synchronously flush hallo answer")
+        }
+    });
+    window.onbeforeunload = null;
+}
+
+function begin_reading() {
+    var client_time = (new Date()).getTime();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tACTION=BEGIN_READING";
+    message += "\tINFO: CURRENT_DOC=" + currentDoc;
+    var log_url = "http://" + server_site + ":8000/LogService/"
+
+    $.ajax({
+        type: 'POST',
+        url: log_url,
+        data: {message: message},
+        async: false,
+        complete: function (jqXHR, textStatus) {
+            //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+            //should we reset onbeforeunload here?
+            console.log("synchronously flush hallo answer")
+        }
+    });
+    window.onbeforeunload = null;
+
+}
+
+function end_reading() {
+
+    var client_time = (new Date()).getTime();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tACTION=END_READING";
+    message += "\tINFO: CURRENT_DOC=" + currentDoc;
+    var log_url = "http://" + server_site + ":8000/LogService/"
+
+    $.ajax({
+        type: 'POST',
+        url: log_url,
+        data: {message: message},
+        async: false,
+        complete: function (jqXHR, textStatus) {
+            //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+            //should we reset onbeforeunload here?
+            console.log("synchronously flush hallo answer")
+        }
+    });
+    window.onbeforeunload = null;
+}
+
+function time_estimate() {
+
+    var relstr = "";
+    var rel = -1;
+    if (document.getElementById("rel4").checked == true) {
+        rel = 3;
     }
-    click_on_submittimeestimation_quiet();
+    if (document.getElementById("rel3").checked == true) {
+        rel = 2;
+    }
+    if (document.getElementById("rel2").checked == true) {
+        rel = 1;
+    }
+    if (document.getElementById("rel1").checked == true) {
+        rel = 0;
+    }
+
+    var client_time = (new Date()).getTime();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tACTION=RELEVANCE_ANNOTATION";
+    message += "\tINFO: CURRENT_DOC=" + currentDoc + ' REL=' + rel;
+
+    var log_url = "http://" + server_site + ":8000/LogService/"
+
+    $.ajax({
+        type: 'POST',
+        url: log_url,
+        data: {message: message},
+        async: false,
+        complete: function (jqXHR, textStatus) {
+            //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+            //should we reset onbeforeunload here?
+            console.log("synchronously flush hallo answer")
+        }
+    });
+    window.onbeforeunload = null;
+}
+
+function relevance_annotate() {
+
 }
 
 function over_button_on_click() {
-    var result_ids = $(".rb").map(function (i, e) {return e.id;});
-    var result_urls = $(".rb h3 a").map(function (i, e) {return e.href;});
-    var scores = $(".utility_annotation input").map(function (i, e) {return e.value;});
+    var result_ids = $(".rb").map(function (i, e) {
+        return e.id;
+    });
+    var result_urls = $(".rb h3 a").map(function (i, e) {
+        return e.href;
+    });
+    var scores = $(".utility_annotation input").map(function (i, e) {
+        return e.value;
+    });
     var message = "";
     var client_time = (new Date()).getTime();
     for (var i = 0; i < result_ids.length; i++) {
@@ -263,14 +365,14 @@ function over_button_on_click() {
         message += "\tQUERY=" + currentQuery;
         message += "\tACTION=QUERY_SATISFACTION_ANNOTATION";
         message += "\tINFO:";
-        message += "\tscore=" +  sati_score + "\n";
+        message += "\tscore=" + sati_score + "\n";
         log_url = "http://" + server_site + ":8000/QuerySatisfactionService/";
         $.ajax({
             type: 'POST',
             url: log_url,
             data: {message: message},
             async: false,
-            complete: function(jqXHR, textStatus) {
+            complete: function (jqXHR, textStatus) {
                 console.log("synchronously flush query satisfaction score!")
             }
         });
@@ -280,3 +382,169 @@ function over_button_on_click() {
 }
 
 
+function click_on_time2() {
+    var client_time = (new Date()).getTime();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tDOCID=" + docid;
+    message += "\tACTION=TIME2";
+    message += "\tINFO:" + "Range=" + getRange();
+    var log_url = "http://" + server_site + ":8000/LogService/"
+
+    $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+
+    if (confirm("Are you confirm that this is your time estimation?")) {
+
+
+        $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+        window.onbeforeunload = null;
+        window.location.href = "/time3/" + jobid + "/"
+    }
+}
+
+function click_on_time3() {
+    var client_time = (new Date()).getTime();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tDOCID=" + docid;
+    message += "\tACTION=TIME3";
+    message += "\tINFO:" + " Relative=" + getRelative();
+    var log_url = "http://" + server_site + ":8000/LogService/"
+
+    $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+    if (confirm("Are you confirm that this is your time estimation?")) {
+
+
+        $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+        window.onbeforeunload = null;
+        window.location.href = "/outcome/" + jobid + "/"
+    }
+}
+
+
+function click_on_time1() {
+    var client_time = (new Date()).getTime();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tDOCID=" + "0";
+    message += "\tACTION=TIME_1";
+    message += "\tINFO:" + "Segments=" + getSegs();
+    var log_url = "http://" + server_site + ":8000/LogService/"
+
+    $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+    if (confirm("Are you confirm that this is your time estimation?")) {
+
+        $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+        window.onbeforeunload = null;
+        window.location.href = "/time2/" + jobid + "/";
+    }
+}
+
+
+function click_on_submitoutcome() {
+    var reg = new RegExp("\r\n", "g");
+    var text = document.getElementById("answer").value;
+    var message = "";
+    var client_time = (new Date()).getTime();
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tJOBID=" + jobid;
+    message += "\tDOCID=" + "0";
+    message += "\tACTION=OUTCOME";
+    message += "\tINFO:" + "answer=" + text.replace(reg, " ");
+    var log_url = "http://" + server_site + ":8000/LogService/";
+
+    $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+    if (confirm("Are you confirm that this is your outcome?")) {
+        $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+        window.onbeforeunload = null;
+        window.close();
+    }
+
+}

@@ -43,6 +43,52 @@
 	}
 
 </style>
+    <style>
+        #eq > span {
+            height: 320px;
+            float: left;
+            margin: 15px
+        }
+    </style>
+    <script>
+        var jobid = {{ taskid }};
+        var docid = 0;
+        var currentTaskID = {{ taskid }};
+        $(function () {
+
+            // setup graphic EQ
+            $("#eq > span").each(function () {
+                // read initial values from markup and remove that
+                var value = parseInt($(this).text(), 10);
+                $(this).empty().slider({
+                    value: value,
+                    range: "min",
+                    animate: true,
+                    orientation: "vertical"
+                });
+            });
+
+            $("#slider-range1").slider({
+                range: true,
+                min: 0,
+                max: 60,
+                values: [0, 60],
+                slide: function (event, ui) {
+                    var time1 = ui.values[0];
+                    var time2 = ui.values[1];
+                    var second1 = time1 % 6 * 10;
+                    var second2 = time2 % 6 * 10;
+                    var minute1 = (time1-second1/10)/6;
+                    var minute2 = (time2-second2/10)/6;
+                    $("#amount1").val(minute1 + "分" + second1 + "秒 - " + minute2 + "分" + second2 + "秒");
+                }
+
+            });
+            $("#amount1").val($("#slider-range1").slider("values", 0) * 10 + "s" +
+                    " - " + $("#slider-range1").slider("values", 1) * 10 + "s");
+
+        });
+    </script>
 
 
     <link rel="stylesheet" type="text/css" href="/static/m3.v.20.css">
@@ -51,58 +97,46 @@
 
 <div class="annotation_header">
     <h1>搜索花费时间估计</h1>
-    <p style="color: orangered; font-size:16pt">标注说明：请根据你在实验过程中的感觉，估计你完成当前任务所花费的时间。</p>
-    <p style="color: #080300; font-size:14pt">我们为你提供了一个十分钟长的时间轴，拖动时间轴上的标尺，时间会随之变化。完成之后请点击<span style="color:red">“提交时间估计”</span>。</p>
-<p style="color: #080300; font-size:14pt">你估计的时间花费对我们的实验非常重要，请认真估计。</p>
+    <p style="color: orangered; font-size:16pt">说明：请根据你在完成这个搜索任务过程中的感觉，估计你完成当前任务所花费时间的范围区间。</p>
+    <p style="color: #080300; font-size:14pt">我们为你提供了一个十分钟长的时间轴，拖动时间轴上的标尺，时间会随之变化。请将左侧标尺移动到你认为的时间区间最小值，右侧标尺移动到你认为的时间区间最大值。完成之后请点击<span style="color:red">“提交时间估计”</span>。</p>
+    <p style="color: #080300; font-size:14pt">你估计的时间花费对我们的实验非常重要，请认真估计。</p>
     <p style="color: #080300; font-size:14pt">花费时间： 开始查询任务<--------------------> 结束浏览</p>
 
- <div id = "seekbar"> </div>
-    <span>花费时间</span>
-    <span id = "time" name = "time">0分0秒</span>
-<button class="WCOverButton button blue close-reveal-modal"  type="Button" onclick="click_on_submittimeestimation();">提交时间估计</button>
-    <!--
-    <script type="text/javascript" src="/static/conf/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="/static/jquery.min.2.1.4.js"></script>
-    !-->
-    <script>
+    <div style="width:600px">
+        <p>
+            <label for="amount1">Time</label>
+            <input type="text" id="amount1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+        <div id="slider-range1"></div>
+    </div>
 
-	$(document).ready(function(){
-	    $('#seekbar').slider({
-		min:0,
-		max:600,
-		step:1,
-		change:showValue
-	    });
-	    function showValue(event, ui){
-            var time =ui.value;
-            var second = time % 60;
-            var minute = (time-second)/60;
-		    $('#time').html(minute+'分'+second+'秒');
-	    }
-	});
-    </script>
+    <div id = "seekbar"> </div>
+    
+    <button class="WCOverButton button blue close-reveal-modal"  type="Button" onclick="click_on_submittimeestimation();">提交时间估计</button>
+
 
 </div>
+
 <div class="annotation_header">
-<div>
-    <h2>请针对以下问题，简单回顾一下搜索过程中的收获:</h2>
-    <h3 style="color:red">问题：{{ question }}</h3>
-    <h3>完成之后请点击<span style="color:red">“提交收获”</span></h3>
+    <div>
+        <h2>请针对以下问题，简单回顾一下搜索过程中的收获:</h2>
+        <h3 style="color:red">问题：{{ question }}</h3>
+        <h3>完成之后请点击<span style="color:red">“提交收获”</span></h3>
+    </div>
+</div>
 
-</div>
-</div>
 <div class="annotation_list">
     <div class="annotation_cell">
         <textarea name="answer" id="answer"></textarea>
     </div>
     <button class="WCOverButton button blue close-reveal-modal align"  type="Button" onclick="click_on_submitoutcome();">提交收获</button>
 </div>
-<!--
+
 <div class="annotation_header">
 <h1>
     搜索结果标注
 </h1>
-<p style="color: orangered; font-size:16pt">标注说明：请针对当前的 查询 和 搜索结果 ，标注您在看到该结果时的收获:<br>1星（完全没有收获），2星（收获很小），3星（比较有收获），4星（收获很大）</p>
+<p style="color: orangered; font-size:16pt">标注说明：请针对当前的搜索结果，标注您在根据该结果页面完成任务时，感觉到的结果质量:<br>1星（质量非常差），2星（质量差），3星（质量一般），4星（质量高），5星（质量非常高）</p>
 <p style="color: blue; font-size:18pt">当前查询:{{ query }}</p>
 </div>
 
@@ -128,6 +162,6 @@
     </div>
     <button class="WCOverButton button blue close-reveal-modal"  type="Button" onclick="session_over_button_on_click();">浏览完成</button>
 </div>
--->
+
 </body>
 </html>
