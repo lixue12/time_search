@@ -1,0 +1,36 @@
+.annotation_header {
+    background: #EEEEEE;
+    margin: 50px;
+    padding: 40px;
+}
+.annotation_list {
+    margin: 40px;
+}
+.annotation_footer {
+    background: #EEEEEE;
+    margin: 10px;
+    padding: 40px;
+}
+.annotation_cell {
+    padding-left: 80px;
+    padding-right: 150px;
+    padding-top: 10px;
+}
+.annotation_discribe {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.annotation_cell .check {
+    visibility: hidden;
+    width: 24px;
+    height: 24px;
+    margin-left: -40px;
+    float: left;
+}
+.annotation_list textarea {
+    height: 150px;
+    width: 500px;
+}
+.align {
+    margin-left: 40px;
+}
