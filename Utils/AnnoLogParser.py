@@ -41,4 +41,4 @@ def insertMessageToDB(message):
     except Exception:
         transaction.rollback()
     else:
-        transaction.commit()
+        transaction.atomic()

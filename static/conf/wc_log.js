@@ -350,19 +350,25 @@ $(function () {
    });
 });
 
-function over_button_on_click() {
+function over_button_to_anno() {
     var client_time = (new Date()).getTime();
     send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
     sync_flush_log_message();
     location.href = "/annolist/" + currentTaskID + "/";
 }
 
-/*
-罗成添加
- */
+
 function over_button_on_click_time(){
     var client_time = (new Date()).getTime();
     send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
     sync_flush_log_message();
     location.href = "/taskreview/" + currentTaskID + "/";
+}
+
+function over_button_to_search(){
+    var client_time = (new Date()).getTime();
+    send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
+    sync_flush_log_message();
+    //print "in search: " + currentTaskID;
+    location.href = "/search/" + currentTaskID + "/" + currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
 }

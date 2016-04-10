@@ -116,17 +116,28 @@ function session_over_button_on_click() {
 }
 
 function click_on_submittimeestimation() {
-    var text = $("#time").html();
     var message = "";
     var client_time = (new Date()).getTime();
     message += "TIMESTAMP=" + client_time;
     message += "\tUSER=" + studentID;
     message += "\tTASK=" + currentTaskID;
-    message += "\tACTION=DESCRIPTION";
-    message += "\tINFO:";
-    message += "\ttime=" + text + "\n";
+    message += "\tACTION=TIMEESTIMATE";
+    message += "\tRange=" + getRange();
     var log_url = "http://" + server_site + ":8000/TimeEstService/";
-    if (confirm("Are you confirm that this is your time estimation?")) {
+
+    $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush hallo answer")
+            }
+        });
+
+    if (confirm("你确定提交当前的估计时间吗？")) {
         $.ajax({
             type: 'POST',
             url: log_url,
@@ -135,7 +146,6 @@ function click_on_submittimeestimation() {
             complete: function (jqXHR, textStatus) {
                 //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
                 //should we reset onbeforeunload here?
-                console.log(text)
                 console.log("synchronously flush time estimation")
             }
         });

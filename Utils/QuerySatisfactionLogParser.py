@@ -40,4 +40,4 @@ def insertMessageToDB(message):
         transaction.rollback()
     else:
         print "commit success!"
-        transaction.commit()
+        transaction.atomic()

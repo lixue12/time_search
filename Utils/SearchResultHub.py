@@ -97,7 +97,7 @@ class SearchResultHub:
             return resultnum
         else:
             print "commit success!"
-            transaction.commit()
+            transaction.atomic()
             return num
 
     def test(self):

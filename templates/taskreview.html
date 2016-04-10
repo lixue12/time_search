@@ -27,6 +27,7 @@
 	<script type="text/javascript" src="/static/conf/jquery-min.js"></script>
     <script type="text/javascript" src="/static/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/static/conf/wc_preprocess.js"></script>
+    <script type="text/javascript" src="/static/conf/wc_log.js"></script>
 	<script type="text/javascript" src="/static/conf/jquery.bgpos.js"></script>
 	<script type="text/javascript" src="/static/conf/jquery.reveal.js"></script>
 	<script type="text/javascript" src="/static/conf/jquery.raty.js"></script>
@@ -96,9 +97,9 @@
 <body class=" vr1024">
 
 <div class="annotation_header">
-    <h1>搜索花费时间估计</h1>
-    <p style="color: orangered; font-size:16pt">说明：请根据你在完成这个搜索任务过程中的感觉，估计你完成当前任务所花费时间的范围区间。</p>
-    <p style="color: #080300; font-size:14pt">我们为你提供了一个十分钟长的时间轴，拖动时间轴上的标尺，时间会随之变化。请将左侧标尺移动到你认为的时间区间最小值，右侧标尺移动到你认为的时间区间最大值。完成之后请点击<span style="color:red">“提交时间估计”</span>。</p>
+    <h1 align="center">搜索花费时间估计</h1>
+    <p style="color: orangered; font-size:14pt">说明：请根据你的感觉，估计你完成当前任务所花费时间的范围区间。</p>
+    <p style="color: #080300; font-size:12pt">我们为你提供了一个十分钟长的时间轴，拖动时间轴上的标尺，时间会随之变化。请将左侧标尺移动到你认为的时间区间最小值，右侧标尺移动到你认为的时间区间最大值。完成之后请点击<span style="color:red">“提交时间估计”</span>。</p>
     <p style="color: #080300; font-size:14pt">你估计的时间花费对我们的实验非常重要，请认真估计。</p>
     <p style="color: #080300; font-size:14pt">花费时间： 开始查询任务<--------------------> 结束浏览</p>
 
@@ -117,51 +118,18 @@
 
 </div>
 
-<div class="annotation_header">
-    <div>
-        <h2>请针对以下问题，简单回顾一下搜索过程中的收获:</h2>
-        <h3 style="color:red">问题：{{ question }}</h3>
-        <h3>完成之后请点击<span style="color:red">“提交收获”</span></h3>
-    </div>
-</div>
 
 <div class="annotation_list">
-    <div class="annotation_cell">
-        <textarea name="answer" id="answer"></textarea>
-    </div>
-    <button class="WCOverButton button blue close-reveal-modal align"  type="Button" onclick="click_on_submitoutcome();">提交收获</button>
+    <button class="WCOverButton button blue close-reveal-modal align"  type="Button" style="margin-left:150px" onclick="over_button_to_anno();">完成估计</button>
 </div>
 
-<div class="annotation_header">
-<h1>
-    搜索结果标注
-</h1>
-<p style="color: orangered; font-size:16pt">标注说明：请针对当前的搜索结果，标注您在根据该结果页面完成任务时，感觉到的结果质量:<br>1星（质量非常差），2星（质量差），3星（质量一般），4星（质量高），5星（质量非常高）</p>
-<p style="color: blue; font-size:18pt">当前查询:{{ query }}</p>
-</div>
-
-<div class="wrapper" id="wrapper">
-
-<div id="main" class="main">
-
-
- <div class="results">
-
-
-</div>
-</div>
-</div>
-
-<div class="annotation_footer">
-    <div>
-        <div>
-            当前任务对搜索结果的满意程度:
-        </div>
-        <div id="session_annotation"></div>
-        <div><p></p></div>
-    </div>
-    <button class="WCOverButton button blue close-reveal-modal"  type="Button" onclick="session_over_button_on_click();">浏览完成</button>
-</div>
+<script>
+    function getRange(){
+        var rtr = "";
+        rtr += '_' + $("#slider-range1").slider("values", 0)+'_' + $("#slider-range1").slider("values", 1);
+        return rtr;
+    }
+</script>
 
 </body>
 </html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+    </style>
+    <link href="/static/conf/button.css" type="text/css" rel="stylesheet">
+    <link href="/static/conf/annotation.css" type="text/css" rel="stylesheet">
+    <!-- global variables: current task id, current query -->
+    <script type="text/javascript">
+        currentTaskID = "{{ taskid }}";
+        currentTemporal = "{{ temporal }}";
+        currentOption = "{{ option }}";
+        currentQuery = "{{ query }}"
+   </script>
+   	<script type="text/javascript" src="/static/conf/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery-min.js"></script>
+	<script type="text/javascript" src="/static/conf/wc_preprocess.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.bgpos.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.reveal.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.raty.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.raty.min.js"></script>
+    <script type="text/javascript" src="/static/conf/anno_log.js"></script>
+    <script type="text/javascript" src="/static/conf/wc_log.js"></script>
+</head>
+<body>
+
+<div class="annotation_header">
+    <h1 align="center">调研问卷</h1>
+    <p style="color: blue; font-size:14pt">当前话题：{{ topic }}</p>
+    <p style="color: blue; font-size:14pt">当前查询：{{ query }}</p>
+    <p style="color: blue; font-size:14pt">当前任务描述：{{ content }}</p>
+    <p style="color: orangered; font-size:14pt">标注说明：请如实回答下列问题。你的回答结果并不会影响之后的查询内容。
+        </p>
+    <div>
+        <p style="font-size:14pt">1、你对于当前话题 “{{ topic }}” 的熟悉程度是：
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Familiar" id="familiar1" value="1"> 非常不熟悉
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Familiar" id="familiar2" value="2"> 不熟悉
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Familiar" id="familiar3" value="3"> 熟悉程度一般
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Familiar" id="familiar4" value="4"> 熟悉
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Familiar" id="familiar5" value="5"> 非常熟悉
+                </label>
+            </div>
+        </p>
+
+        <p style="font-size:14pt">2、你对于当前话题 “{{ topic }}” 的感兴趣程度是：
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Interest" id="interest1" value="1"> 非常不感兴趣
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Interest" id="interest2" value="2"> 不感兴趣
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Interest" id="interest3" value="3"> 兴趣程度一般
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Interest" id="interest4" value="4"> 感兴趣
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Interest" id="interest5" value="5"> 非常感兴趣
+                </label>
+            </div>
+        </p>
+
+        <p style="font-size:14pt">3、你任务当前查询的难度如何？
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult1" value="1"> 难度非常低
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult2" value="2"> 难度低
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult3" value="3"> 难度一般
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult4" value="4"> 难度高
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult5" value="5"> 难度非常高
+                </label>
+            </div>
+        </p>
+        
+        <p style="font-size:14pt">4、你是否充分理解了当前的任务描述（非常清楚查询目标是什么）？
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Understand" id="yes" value="1"> 是
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Understand" id="no" value="0"> 否
+                </label>
+            </div>
+        </p>
+    </div>
+</div>
+
+
+ <button  class="WCOverButton button blue close-reveal-modal"type="Button" style="margin-left:200px" onclick="over_button_to_search();">开始查询</button>
+ <br>
+ <br>
+</body>
+</html>

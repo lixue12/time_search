@@ -10,6 +10,7 @@ from anno.views import annotation
 from anno.views import log_annotation
 from anno.views import log_session_annotation
 from anno.views import log_outcome
+from anno.views import pre_questionnaire
 from anno.views import questionnaire
 from anno.views import log_query_satisfaction
 from anno.views import description
@@ -25,6 +26,7 @@ urlpatterns = patterns('',
     (r'^login/$',login),
     (r'^tasks/(\d{10})/(.*?)/$',tasks),
     (r'^annolist/(\d{1,2})/$',annolist),
+    (r'^pre_questionnaire/(\d{1,2})/(\d{1,2})/$',pre_questionnaire),
     (r'^annotation/(\d{1,2})/$', annotation),
     (r'^taskreview/(\d{1,2})/$', taskreview),
     (r'^LogService/$', log),

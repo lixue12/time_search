@@ -33,20 +33,15 @@ def search(request,taskid,satisfaction,temporal,query,pageid):
    # query = query.decode('cp936','ignore').decode('utf8')
 
     # print urllib.quote(query)
-    results = srh.getResult(query, 10*(int(pageid)-1), 10)
+    results = srh.getResult(query, 0, 20)
     print type(results)
     man_results= list()
     if satisfaction=='SAT':
         for i in range(0,10,1):
             man_results.append(results[i])
-    if satisfaction=='MIDSAT':
-        for i in range(0,5,1):
-            man_results.append(results[4-i])
-        for i in range(5,10,1):
-            man_results.append(results[i])
     if satisfaction =='UNSAT':
-        for i in range(0,10,1):
-            man_results.append(results[9-i])
+        for i in range(10,20,1):
+            man_results.append(results[i])
     results_count = srh.getCount(query)
     print man_results
     max_pageid = results_count / 10
@@ -94,14 +89,16 @@ def tasks(request, sID,settingId):
     tlist = list()
      # tlist = (taskid, query, content, option, temporal)
     for s in settings:
-        _listitem = [0,'','','','','']
+        _listitem = [0,'','','','','','']
+        setid = s.idx
         temporal = s.temporal
         option= s.option
         taskidx = s.taskidx
         query = Task.objects.get(task_id = taskidx).init_query
         content = Task.objects.get(task_id = taskidx).content
+        topic = Task.objects.get(task_id = taskidx).audiofilename
 
-        if option=='HIDDEN':
+        if option=='HIDDEN' or taskidx==0:
             continue
         else:
             _listitem[3] = option
@@ -109,6 +106,7 @@ def tasks(request, sID,settingId):
             _listitem[1] = query
             _listitem[2] = content
             _listitem[4] = temporal
+            _listitem[5] = topic
             tlist.append(_listitem)
     if sID == '0123456789':
         tlist = [Task.objects.get(task_id=13)]
@@ -118,8 +116,9 @@ def tasks(request, sID,settingId):
 
     html = template.Template(open('templates/tasks.html').read())
 
-    c = template.Context({'tasks':tlist,'tasknum':len(tlist)})
-
+    c = template.Context({'setid':setid, 'tasks':tlist, 'tasknum':len(tlist)})
+    #print 'taskidx', taskidx, query, content, option, temporal
+    
     respon = HttpResponse(html.render(c))
 
     respon.set_cookie('studentID', value=sID, max_age=None, expires=None, path='/', domain=None, secure=None)
@@ -132,9 +131,25 @@ def annolist(request, taskid):
     except:
         return HttpResponse('ERROR: UNKNOWN STUDENT ID')
     lh = LogHub()
+    currTask = Task.objects.get(task_id =int(taskid))
+    query = currTask.init_query
+    content = currTask.content
+    topic = currTask.audiofilename
+    question = currTask.question
+    results = lh.getClickedResults(studentID, taskid)
     queries = lh.getQueriesWithSIDandTaskID(studentID,int(taskid))
+    # print 'len result:', len(results)
+    t = template.Template(open('templates/taskreview.html').read())
+    c = template.Context({'resultlist': [r.content for r in results],
+                          'taskid': taskid,
+                          'content': content,
+                          'query': query,
+                          'topic': topic,
+                          'question':question,
+                          'querynum': len(queries),
+                          'taskid': taskid,
+                          'querylist': queries})
     html = template.Template(open('templates/annolist.html').read())
-    c = template.Context({'querynum': len(queries), 'taskid': taskid, 'querylist': queries})
     return HttpResponse(html.render(c))
 
 
@@ -153,6 +168,29 @@ def annotation(request, taskid):
                           'taskid': taskid})
     return HttpResponse(t.render(c))
 
+def pre_questionnaire(request, taskid, settingId):
+    settings = Setting.objects.filter(idx=int(settingId))
+    for s in settings:
+        task = s.taskidx
+        if task == int(taskid):
+            temporal = s.temporal
+            option= s.option
+            taskid = s.taskidx
+            query = Task.objects.get(task_id = task).init_query
+            content = Task.objects.get(task_id = task).content
+            topic = Task.objects.get(task_id = task).audiofilename
+
+    # print 'len result:', len(results)
+    t = template.Template(open('templates/pre_questionnaire.html').read())
+
+    c = template.Context({'taskid': taskid,
+                          'content': content,
+                          'query': query,
+                          'topic': topic,
+                          'temporal': temporal,
+                          'option': option})
+    html = template.Template(open('templates/pre_questionnaire.html').read())
+    return HttpResponse(html.render(c))
 
 def questionnaire(request, task_id):
     task = Task.objects.get(task_id=int(task_id))
@@ -176,6 +214,7 @@ def taskreview(request,taskid):
     lh = LogHub()
     currTask = Task.objects.get(task_id =int(taskid))
     query = currTask.init_query
+    topic = currTask.audiofilename
     question = currTask.question
     results = lh.getClickedResults(studentID, taskid)
     # print 'len result:', len(results)
@@ -183,8 +222,10 @@ def taskreview(request,taskid):
     c = template.Context({'resultlist': [r.content for r in results],
                           'taskid': taskid,
                           'query': query,
+                          'topic':topic,
                           'question':question})
     return HttpResponse(t.render(c))
+
 @csrf_exempt
 def log(request):
     message = urllib.unquote(request.POST[u'message']).encode('utf8')

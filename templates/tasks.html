@@ -73,13 +73,14 @@
         var arrcookie = strcookie.split("; ");
         var sid = arrcookie[1].split('=')[1]
 
-        document.write('<p align="center"><font style="font-size:16px" color="red">当前实验人员账号为' + sid + '</font></p>')
+        //document.write('<p align="center"><font style="font-size:16px" color="red">当前实验人员账号为' + sid + '</font></p>')
     </script>
-
+<!--
     <p align="center" style="font-size:16px" color="red">当前共有{{ tasknum }}个查询任务</p>
 
     <p align="center" style="font-size:16px" color="red">
-        对于每一个查询任务，你需要用一个查询寻找相关的信息。</p>
+   对于每一个查询任务，你需要用一个查询寻找相关的信息。</p>
+-->
 </div>
 <div class="annotation_list">
     <div class="annotation_cell">
@@ -93,7 +94,7 @@
             </dl>
             <div>
                 <a class="annotation_link"
-                    href='/search/0/SAT/HIGH/北京办理台湾通行证材料/1/'
+                    href='/pre_questionnaire/0/1/'
                     target="_blank" onclick="resetTime();">点击这里开始</a>
             </div>
         </div>
@@ -110,11 +111,10 @@
                 </dl>
                 <div>
                     <a class="annotation_link"
-                        href='/search/{{ item.0 }}/{{ item.3 }}/{{ item.4 }}/{{ item.1 }}/1/'
+                    href='/pre_questionnaire/{{ item.0 }}/{{ setid }}/'
                         target="_blank" onclick="resetTime();">点击这里开始</a>
                 </div>
             </div>
-
         </div>
     {% endfor %}
 </div>

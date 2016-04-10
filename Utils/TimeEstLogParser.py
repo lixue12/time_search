@@ -15,11 +15,10 @@ anno_info_patterns['time'] = re.compile('time=(.*?)$')
 def fromString(line):
     studentID = patterns['USER'].search(line).group(1)
     task_id = patterns['TASK'].search(line).group(1)
-    info = info_patterns.search(line).group(1)
-    time = anno_info_patterns['time'].search(info).group(1)
-    anno_log_obj = TimeEstimation.objects.create(studentID=studentID,
+    #action = patterns['ACTION'].search(line).group(1)
+    #time = patterns['RANGE'].search(line).group(1)
+    anno_log_obj = Time1.objects.create(studentID=studentID,
                                 task_id=task_id,
-                                time=time,
                                 content=line)
     print anno_log_obj
     return anno_log_obj
@@ -29,13 +28,14 @@ def fromString(line):
 def insertMessageToDB(message):
     try:
         for line in message.split('\n'):
-            print line
             if line == '':
                 continue
             log = fromString(line)
             log.save()
-    except Exception:
+    except Exception, e:
+        print str(e)
+        print 'insert exception'
         transaction.rollback()
     else:
         print "commit success!"
-        transaction.commit()
+        #transaction.atomic()
