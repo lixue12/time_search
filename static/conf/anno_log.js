@@ -123,6 +123,7 @@ function click_on_submittimeestimation() {
     message += "\tTASK=" + currentTaskID;
     message += "\tACTION=TIMEESTIMATE";
     message += "\tRange=" + getRange();
+    message += "\t";
     var log_url = "http://" + server_site + ":8000/TimeEstService/";
 
     $.ajax({
@@ -330,60 +331,27 @@ function relevance_annotate() {
 }
 
 function over_button_on_click() {
-    var result_ids = $(".rb").map(function (i, e) {
-        return e.id;
-    });
-    var result_urls = $(".rb h3 a").map(function (i, e) {
-        return e.href;
-    });
-    var scores = $(".utility_annotation input").map(function (i, e) {
-        return e.value;
-    });
     var message = "";
     var client_time = (new Date()).getTime();
-    for (var i = 0; i < result_ids.length; i++) {
-        message += "TIMESTAMP=" + client_time;
-        message += "\tUSER=" + studentID;
-        message += "\tTASK=" + currentTaskID;
-        message += "\tQUERY=" + currentQuery;
-        message += "\tACTION=ANNOTATION";
-        message += "\tINFO:";
-        message += "\tid=" + result_ids[i];
-        message += "\tsrc=" + result_urls[i];
-        message += "\tscore=" + scores[i];
-        message += "\n";
-    }
-    if (confirm("ok?")) {
-        var encode_str = message;
-        var log_url = "http://" + server_site + ":8000/AnnoService/";
-        $.ajax({
-            type: 'POST',
-            url: log_url,
-            data: {message: encode_str},
-            async: false,
-            complete: function (jqXHR, textStatus) {
-                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
-                //should we reset onbeforeunload here?
-                console.log("synchronously flush annotations!")
-            }
-        });
-        var sati_score = $("#query_annotation").raty("score");
-        message = "";
-        message += "TIMESTAMP=" + client_time;
-        message += "\tUSER=" + studentID;
-        message += "\tTASK=" + currentTaskID;
-        message += "\tQUERY=" + currentQuery;
-        message += "\tACTION=QUERY_SATISFACTION_ANNOTATION";
-        message += "\tINFO:";
-        message += "\tscore=" + sati_score + "\n";
-        log_url = "http://" + server_site + ":8000/QuerySatisfactionService/";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tTASK=" + currentTaskID;
+    message += "\tQUALITY=" + getAnswer1();
+    message += "\tDIFFICULT=" + getAnswer2();
+    message += "\tFEELTIME=" + getAnswer3();
+    message += "\tPRESSURE=" + getAnswer4();
+    message += "\t";
+    var log_url = "http://" + server_site + ":8000/PostQuestionService/";
+    if (confirm("你确定提交当前问卷吗？")) {
         $.ajax({
             type: 'POST',
             url: log_url,
             data: {message: message},
             async: false,
             complete: function (jqXHR, textStatus) {
-                console.log("synchronously flush query satisfaction score!")
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush time estimation")
             }
         });
         window.onbeforeunload = null;

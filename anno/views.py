@@ -10,6 +10,8 @@ from Utils import AnnoLogParser
 from Utils import SessionAnnoLogParser
 from Utils import OutcomeLogParser
 from Utils import TimeEstLogParser
+from Utils import PreQuestionLogParser
+from Utils import PostQuestionLogParser
 
 from Utils import QuerySatisfactionLogParser
 from Utils.LogHub import LogHub
@@ -192,6 +194,33 @@ def pre_questionnaire(request, taskid, settingId):
     html = template.Template(open('templates/pre_questionnaire.html').read())
     return HttpResponse(html.render(c))
 
+def post_questionnaire(request, taskid):
+    try:
+        studentID = request.COOKIES['studentID']
+    except:
+        return HttpResponse('ERROR: UNKNOWN STUDENT ID')
+    lh = LogHub()
+    currTask = Task.objects.get(task_id =int(taskid))
+    query = currTask.init_query
+    content = currTask.content
+    topic = currTask.audiofilename
+    question = currTask.question
+    results = lh.getClickedResults(studentID, taskid)
+    queries = lh.getQueriesWithSIDandTaskID(studentID,int(taskid))
+    # print 'len result:', len(results)
+    t = template.Template(open('templates/taskreview.html').read())
+    c = template.Context({'resultlist': [r.content for r in results],
+                         'taskid': taskid,
+                         'content': content,
+                         'query': query,
+                         'topic': topic,
+                         'question':question,
+                         'querynum': len(queries),
+                         'taskid': taskid,
+                         'querylist': queries})
+    html = template.Template(open('templates/post_questionnaire.html').read())
+    return HttpResponse(html.render(c))
+
 def questionnaire(request, task_id):
     task = Task.objects.get(task_id=int(task_id))
     t = template.Template(open('templates/questionnaire.html').read())
@@ -270,4 +299,21 @@ def log_timeest(request):
 
     message = urllib.unquote(request.POST[u'message'])
     TimeEstLogParser.insertMessageToDB(message)
+    return HttpResponse('OK')
+
+#insert by lixue
+@csrf_exempt
+def log_prequestion(request):
+    
+    message = urllib.unquote(request.POST[u'message'])
+    #print message
+    PreQuestionLogParser.insertMessageToDB(message)
+    return HttpResponse('OK')
+
+@csrf_exempt
+def log_postquestion(request):
+    
+    message = urllib.unquote(request.POST[u'message'])
+    #print message
+    PostQuestionLogParser.insertMessageToDB(message)
     return HttpResponse('OK')

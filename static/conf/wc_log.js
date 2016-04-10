@@ -354,7 +354,7 @@ function over_button_to_anno() {
     var client_time = (new Date()).getTime();
     send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
     sync_flush_log_message();
-    location.href = "/annolist/" + currentTaskID + "/";
+    location.href = "/post_questionnaire/" + currentTaskID + "/";
 }
 
 
@@ -367,8 +367,32 @@ function over_button_on_click_time(){
 
 function over_button_to_search(){
     var client_time = (new Date()).getTime();
-    send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
-    sync_flush_log_message();
+    var message = "";
+    message += "TIMESTAMP=" + client_time;
+    message += "\tUSER=" + studentID;
+    message += "\tTASK=" + currentTaskID;
+    message += "\tFAMILIAR=" + getAnswer1();
+    message += "\tINTEREST=" + getAnswer2();
+    message += "\tDIFFICULT=" + getAnswer3();
+    message += "\tUNDERSTAND=" + getAnswer4();
+    message += "\t";
+    var log_url = "http://" + server_site + ":8000/PreQuestionService/";
+    //send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
+    //sync_flush_log_message();
     //print "in search: " + currentTaskID;
-    location.href = "/search/" + currentTaskID + "/" + currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
+    if (confirm("你确定提交当前问卷吗？")) {
+        $.ajax({
+            type: 'POST',
+            url: log_url,
+            data: {message: message},
+            async: false,
+            complete: function (jqXHR, textStatus) {
+                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                //should we reset onbeforeunload here?
+                console.log("synchronously flush time estimation")
+            }
+        });
+        window.onbeforeunload = null;
+        location.href = "/search/" + currentTaskID + "/" + currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
+    }
 }

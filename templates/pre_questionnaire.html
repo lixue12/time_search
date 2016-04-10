@@ -36,6 +36,7 @@
         </p>
     <div>
         <p style="font-size:14pt">1、你对于当前话题 “{{ topic }}” 的熟悉程度是：
+        <form name="question1" id="question1">
             <div class="radio">
                 <label style="padding-left:30px;">
                     <input type="radio" name="Familiar" id="familiar1" value="1"> 非常不熟悉
@@ -61,9 +62,11 @@
                     <input type="radio" name="Familiar" id="familiar5" value="5"> 非常熟悉
                 </label>
             </div>
+        </form>
         </p>
 
         <p style="font-size:14pt">2、你对于当前话题 “{{ topic }}” 的感兴趣程度是：
+        <form name="question2" id="question2">
             <div class="radio">
                 <label style="padding-left:30px;">
                     <input type="radio" name="Interest" id="interest1" value="1"> 非常不感兴趣
@@ -89,9 +92,11 @@
                     <input type="radio" name="Interest" id="interest5" value="5"> 非常感兴趣
                 </label>
             </div>
+        </form>
         </p>
 
         <p style="font-size:14pt">3、你任务当前查询的难度如何？
+        <form name="question3" id="question3">
             <div class="radio">
                 <label style="padding-left:30px;">
                     <input type="radio" name="Difficult" id="difficult1" value="1"> 难度非常低
@@ -117,9 +122,11 @@
                     <input type="radio" name="Difficult" id="difficult5" value="5"> 难度非常高
                 </label>
             </div>
+        </form>
         </p>
         
         <p style="font-size:14pt">4、你是否充分理解了当前的任务描述（非常清楚查询目标是什么）？
+        <form name="question4" id="question4">
             <div class="radio">
                 <label style="padding-left:30px;">
                     <input type="radio" name="Understand" id="yes" value="1"> 是
@@ -130,6 +137,7 @@
                     <input type="radio" name="Understand" id="no" value="0"> 否
                 </label>
             </div>
+        </form>
         </p>
     </div>
 </div>
@@ -138,5 +146,61 @@
  <button  class="WCOverButton button blue close-reveal-modal"type="Button" style="margin-left:200px" onclick="over_button_to_search();">开始查询</button>
  <br>
  <br>
+
+ <script>
+    function getAnswer1(){
+        form = document.getElementById("question1");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var familiar = null;
+        for (var i=0; i<form.Familiar.length; i++){
+            if (form.Familiar[i].checked){
+                familiar = form.Familiar[i].value;
+                break;
+            }
+        }
+        return familiar;
+    }
+    function getAnswer2(){
+        form = document.getElementById("question2");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var interest = null;
+        for (var i=0; i<form.Interest.length; i++){
+            if (form.Interest[i].checked){
+                interest = form.Interest[i].value;
+                break;
+            }
+        }
+        return interest;
+    }
+    function getAnswer3(){
+        form = document.getElementById("question3");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var difficult = null;
+        for (var i=0; i<form.Difficult.length; i++){
+            if (form.Difficult[i].checked){
+                difficult = form.Difficult[i].value;
+                break;
+            }
+        }
+        return difficult;
+    }
+    function getAnswer4(){
+        form = document.getElementById("question4");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var understand = null;
+        for (var i=0; i<form.Understand.length; i++){
+            if (form.Understand[i].checked){
+                understand = form.Understand[i].value;
+                break;
+            }
+        }
+        return understand;
+    }
+</script>
+
 </body>
 </html>

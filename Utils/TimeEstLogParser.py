@@ -30,6 +30,7 @@ def insertMessageToDB(message):
         for line in message.split('\n'):
             if line == '':
                 continue
+            print line
             log = fromString(line)
             log.save()
     except Exception, e:

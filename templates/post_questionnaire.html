@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+    </style>
+    <link href="/static/conf/button.css" type="text/css" rel="stylesheet">
+    <link href="/static/conf/annotation.css" type="text/css" rel="stylesheet">
+    <!-- global variables: current task id, current query -->
+    <script type="text/javascript">
+        currentTaskID = "{{ taskid }}";
+        currentQuery = "{{ query }}"
+   </script>
+   	<script type="text/javascript" src="/static/conf/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery-min.js"></script>
+	<script type="text/javascript" src="/static/conf/wc_preprocess.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.bgpos.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.reveal.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.raty.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.raty.min.js"></script>
+    <script type="text/javascript" src="/static/conf/anno_log.js"></script>
+</head>
+<body>
+
+<div class="annotation_header">
+    <h1 align="center">搜索结果反馈</h1>
+    <p style="color: blue; font-size:14pt">当前话题：{{ topic }}</p>
+    <p style="color: blue; font-size:14pt">当前查询：{{ query }}</p>
+    <p style="color: blue; font-size:14pt">当前任务描述：{{ content }}</p>
+    <p style="color: orangered; font-size:14pt">标注说明：请针对当前的搜索结果，标注您在根据该结果页面完成任务时的感觉
+    </p>
+    <div>
+        <p style="font-size:14pt">1、请对本查询的搜索结果列表质量进行打分:
+        <form name="question1" id="question1">
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Quality" id="quality1" value="1"> 1分（质量非常差）
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Quality" id="quality2" value="2"> 2分（质量差）
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Quality" id="quality3" value="3"> 3分（质量一般）
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Quality" id="quality4" value="4"> 4分（质量高）
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Quality" id="quality5" value="5"> 5分（质量非常高）
+                </label>
+            </div>
+        </form>
+        </p>
+
+        <p style="font-size:14pt">2、请对本查询的难度进行打分:
+        <form name="question2" id="question2">
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult1" value="1"> 难度非常低
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult2" value="2"> 难度低
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult3" value="3"> 难度一般
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult4" value="4"> 难度高
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult5" value="5"> 难度非常高
+                </label>
+            </div>
+        </form>
+        </p>
+
+        <p style="font-size:14pt">3、请如实回答，你在完成此次查询的过程中有没有刻意关注时间流逝？
+        <form name="question3" id="question3">
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Feeltime" id="yes" value="1"> 是
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Felltime" id="no" value="0"> 否
+                </label>
+            </div>
+        </form>
+        </p>
+
+        <p style="font-size:14pt">4、你在完成此次查询的过程中有没有感觉到时间压力？
+        <form name="question4" id="question4">
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Pressure" id="yes" value="1"> 是
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Pressure" id="no" value="0"> 否
+                </label>
+            </div>
+        </form>
+        </p>
+
+        <p style="font-size:14pt">5、请通过录音来完成以下问题:
+        </br></br>
+            <p style="font-size:16pt">&nbsp &nbsp &nbsp &nbsp{{ question }}</p>
+        </p>
+    </div>
+</div>
+
+
+ <button class="WCOverButton button blue close-reveal-modal"  type="Button" style="margin-left:200px" onclick="over_button_on_click();">提交反馈</button>
+
+ <script>
+    function getAnswer1(){
+        form = document.getElementById("question1");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var quality = null;
+        for (var i=0; i<form.Quality.length; i++){
+            if (form.Quality[i].checked){
+                quality = form.Quality[i].value;
+                break;
+            }
+        }
+        return quality;
+    }
+    function getAnswer2(){
+        form = document.getElementById("question2");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var difficult = null;
+        for (var i=0; i<form.Difficult.length; i++){
+            if (form.Difficult[i].checked){
+                difficult = form.Difficult[i].value;
+                break;
+            }
+        }
+        return difficult;
+    }
+    function getAnswer3(){
+        form = document.getElementById("question3");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var feeltime = null;
+        for (var i=0; i<form.Feeltime.length; i++){
+            if (form.Feeltime[i].checked){
+                feeltime = form.Feeltime[i].value;
+                break;
+            }
+        }
+        return feeltime;
+    }
+    
+    function getAnswer4(){
+        form = document.getElementById("question4");
+        //取得radio的值
+        //TODO: make sure var familiar will not be null!
+        var pressure = null;
+        for (var i=0; i<form.Pressure.length; i++){
+            if (form.Pressure[i].checked){
+                pressure = form.Pressure[i].value;
+                break;
+            }
+        }
+        return pressure;
+    }
+</script>
+
+</body>
+</html>
