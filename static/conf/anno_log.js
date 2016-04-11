@@ -122,21 +122,9 @@ function click_on_submittimeestimation() {
     message += "\tUSER=" + studentID;
     message += "\tTASK=" + currentTaskID;
     message += "\tACTION=TIMEESTIMATE";
-    message += "\tRange=" + getRange();
+    message += "\tRANGE=" + getRange();
     message += "\t";
     var log_url = "http://" + server_site + ":8000/TimeEstService/";
-
-    $.ajax({
-            type: 'POST',
-            url: log_url,
-            data: {message: message},
-            async: false,
-            complete: function (jqXHR, textStatus) {
-                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
-                //should we reset onbeforeunload here?
-                console.log("synchronously flush hallo answer")
-            }
-        });
 
     if (confirm("你确定提交当前的估计时间吗？")) {
         $.ajax({
@@ -151,6 +139,7 @@ function click_on_submittimeestimation() {
             }
         });
         window.onbeforeunload = null;
+        location.href = "/post_questionnaire/" + currentTaskID + "/";
     }
 }
 
@@ -333,29 +322,37 @@ function relevance_annotate() {
 function over_button_on_click() {
     var message = "";
     var client_time = (new Date()).getTime();
-    message += "TIMESTAMP=" + client_time;
-    message += "\tUSER=" + studentID;
-    message += "\tTASK=" + currentTaskID;
-    message += "\tQUALITY=" + getAnswer1();
-    message += "\tDIFFICULT=" + getAnswer2();
-    message += "\tFEELTIME=" + getAnswer3();
-    message += "\tPRESSURE=" + getAnswer4();
-    message += "\t";
-    var log_url = "http://" + server_site + ":8000/PostQuestionService/";
-    if (confirm("你确定提交当前问卷吗？")) {
-        $.ajax({
-            type: 'POST',
-            url: log_url,
-            data: {message: message},
-            async: false,
-            complete: function (jqXHR, textStatus) {
-                //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
-                //should we reset onbeforeunload here?
-                console.log("synchronously flush time estimation")
-            }
-        });
-        window.onbeforeunload = null;
-        window.close();
+
+    if (getAnswer1()==null || getAnswer2()==null ||
+        getAnswer3()==null || getAnswer4()==null){
+        alert("选项不能为空！");
+        console.log("not finish questionnaire");
+    }
+    else{
+        message += "TIMESTAMP=" + client_time;
+        message += "\tUSER=" + studentID;
+        message += "\tTASK=" + currentTaskID;
+        message += "\tQUALITY=" + getAnswer1();
+        message += "\tDIFFICULT=" + getAnswer2();
+        message += "\tFEELTIME=" + getAnswer3();
+        message += "\tPRESSURE=" + getAnswer4();
+        message += "\t";
+        var log_url = "http://" + server_site + ":8000/PostQuestionService/";
+        if (confirm("你确定提交当前问卷吗？")) {
+            $.ajax({
+                type: 'POST',
+                url: log_url,
+                data: {message: message},
+                async: false,
+                complete: function (jqXHR, textStatus) {
+                    //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                    //should we reset onbeforeunload here?
+                    console.log("synchronously flush time estimation")
+                }
+            });
+            window.onbeforeunload = null;
+            window.close();
+        }
     }
 }
 

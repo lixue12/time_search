@@ -29,94 +29,164 @@
     <p style="color: blue; font-size:14pt">当前话题：{{ topic }}</p>
     <p style="color: blue; font-size:14pt">当前查询：{{ query }}</p>
     <p style="color: blue; font-size:14pt">当前任务描述：{{ content }}</p>
-    <p style="color: orangered; font-size:14pt">标注说明：请针对当前的搜索结果，标注您在根据该结果页面完成任务时的感觉
+    <p style="color: orangered; font-size:14pt">说明：请针对当前的搜索结果，标注您在根据该结果页面完成任务时的感觉
     </p>
     <div>
-        <p style="font-size:14pt">1、请对本查询的搜索结果列表质量进行打分:
+        <p style="font-size:14pt">1、你认为刚刚展示的搜索结果页的质量非常高（搜索结果对于你完成任务、回答问题非常有用，很容易找到答案），是吗？
         <form name="question1" id="question1">
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Quality" id="quality1" value="1"> 1分（质量非常差）
+                    <input type="radio" name="Quality" id="quality1" value="1"> 强烈反对
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Quality" id="quality2" value="2"> 2分（质量差）
+                    <input type="radio" name="Quality" id="quality2" value="2"> 反对
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Quality" id="quality3" value="3"> 3分（质量一般）
+                    <input type="radio" name="Quality" id="quality3" value="3"> 有点反对
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Quality" id="quality4" value="4"> 4分（质量高）
+                    <input type="radio" name="Quality" id="quality4" value="4"> 说不清（既不赞同也不反对）
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Quality" id="quality5" value="5"> 5分（质量非常高）
+                    <input type="radio" name="Quality" id="quality5" value="5"> 有点赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Quality" id="quality6" value="6"> 赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Quality" id="quality7" value="7"> 非常赞同
                 </label>
             </div>
         </form>
         </p>
 
-        <p style="font-size:14pt">2、请对本查询的难度进行打分:
+        <p style="font-size:14pt">2、你觉得刚完成的查询任务有多难（你顺利并且轻松地找到了满意的答案吗）？
         <form name="question2" id="question2">
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult1" value="1"> 难度非常低
+                    <input type="radio" name="Difficult" id="difficult1" value="1"> 非常容易
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult2" value="2"> 难度低
+                    <input type="radio" name="Difficult" id="difficult2" value="2"> 比较容易
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult3" value="3"> 难度一般
+                    <input type="radio" name="Difficult" id="difficult3" value="3"> 有点容易
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult4" value="4"> 难度高
+                    <input type="radio" name="Difficult" id="difficult4" value="4"> 说不清
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult5" value="5"> 难度非常高
+                    <input type="radio" name="Difficult" id="difficult5" value="5"> 有点难
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult6" value="6"> 比较难
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult7" value="7"> 非常难
                 </label>
             </div>
         </form>
         </p>
 
-        <p style="font-size:14pt">3、请如实回答，你在完成此次查询的过程中有没有刻意关注时间流逝？
+        <p style="font-size:14pt">3、你在刚才完成任务的过程中，没有刻意去关注时间流逝，对吗？
         <form name="question3" id="question3">
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Feeltime" id="yes" value="1"> 是
+                    <input type="radio" name="Feeltime" id="feeltime1" value="1"> 强烈反对
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Felltime" id="no" value="0"> 否
+                    <input type="radio" name="Feeltime" id="feeltime2" value="2"> 反对
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Feeltime" id="feeltime3" value="3"> 有点反对
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Feeltime" id="feeltime4" value="4"> 说不清（既不赞同也不反对）
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Feeltime" id="feeltime5" value="5"> 有点赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Feeltime" id="feeltime6" value="6"> 赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Feeltime" id="feeltime7" value="7"> 非常赞同
                 </label>
             </div>
         </form>
         </p>
 
-        <p style="font-size:14pt">4、你在完成此次查询的过程中有没有感觉到时间压力？
+        <p style="font-size:14pt">4、你在刚才完成任务的过程中，没有因为外界或自身原因产生一种“想要尽快完成任务”的紧迫感，对吗？
         <form name="question4" id="question4">
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Pressure" id="yes" value="1"> 是
+                    <input type="radio" name="Pressure" id="pressure1" value="1"> 强烈反对
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Pressure" id="no" value="0"> 否
+                    <input type="radio" name="Pressure" id="pressure2" value="2"> 反对
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Pressure" id="pressure3" value="3"> 有点反对
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Pressure" id="pressure4" value="4"> 说不清（既不赞同也不反对）
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Pressure" id="pressure5" value="5"> 有点赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Pressure" id="pressure6" value="6"> 赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Pressure" id="pressure7" value="7"> 非常赞同
                 </label>
             </div>
         </form>

@@ -32,10 +32,10 @@
     <p style="color: blue; font-size:14pt">当前话题：{{ topic }}</p>
     <p style="color: blue; font-size:14pt">当前查询：{{ query }}</p>
     <p style="color: blue; font-size:14pt">当前任务描述：{{ content }}</p>
-    <p style="color: orangered; font-size:14pt">标注说明：请如实回答下列问题。你的回答结果并不会影响之后的查询内容。
+    <p style="color: orangered; font-size:14pt">说明：请如实回答下列问题。你的回答结果并不会影响之后的查询内容。
         </p>
     <div>
-        <p style="font-size:14pt">1、你对于当前话题 “{{ topic }}” 的熟悉程度是：
+        <p style="font-size:14pt">1、你对于当前话题 “{{ topic }}” 是否熟悉？
         <form name="question1" id="question1">
             <div class="radio">
                 <label style="padding-left:30px;">
@@ -49,23 +49,33 @@
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Familiar" id="familiar3" value="3"> 熟悉程度一般
+                    <input type="radio" name="Familiar" id="familiar3" value="3"> 有点不熟悉
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Familiar" id="familiar4" value="4"> 熟悉
+                    <input type="radio" name="Familiar" id="familiar4" value="4"> 说不清
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Familiar" id="familiar5" value="5"> 非常熟悉
+                    <input type="radio" name="Familiar" id="familiar5" value="5"> 有点熟悉
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Familiar" id="familiar6" value="6"> 熟悉
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Familiar" id="familiar7" value="7"> 非常熟悉
                 </label>
             </div>
         </form>
         </p>
 
-        <p style="font-size:14pt">2、你对于当前话题 “{{ topic }}” 的感兴趣程度是：
+        <p style="font-size:14pt">2、你对于当前话题 “{{ topic }}” 是否感兴趣？
         <form name="question2" id="question2">
             <div class="radio">
                 <label style="padding-left:30px;">
@@ -79,62 +89,107 @@
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Interest" id="interest3" value="3"> 兴趣程度一般
+                    <input type="radio" name="Interest" id="interest3" value="3"> 有点不感兴趣
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Interest" id="interest4" value="4"> 感兴趣
+                    <input type="radio" name="Interest" id="interest4" value="4"> 说不清
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Interest" id="interest5" value="5"> 非常感兴趣
+                    <input type="radio" name="Interest" id="interest5" value="5"> 有点感兴趣
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Interest" id="interest6" value="6"> 感兴趣
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Interest" id="interest7" value="7"> 非常感兴趣
                 </label>
             </div>
         </form>
         </p>
 
-        <p style="font-size:14pt">3、你任务当前查询的难度如何？
+        <p style="font-size:14pt">3、你觉得当前这个查询任务有多难（你预计会顺利并且轻松地找到满意的答案吗）？
         <form name="question3" id="question3">
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult1" value="1"> 难度非常低
+                    <input type="radio" name="Difficult" id="difficult1" value="1"> 非常容易
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult2" value="2"> 难度低
+                    <input type="radio" name="Difficult" id="difficult2" value="2"> 比较容易
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult3" value="3"> 难度一般
+                    <input type="radio" name="Difficult" id="difficult3" value="3"> 有点容易
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult4" value="4"> 难度高
+                    <input type="radio" name="Difficult" id="difficult4" value="4"> 说不清
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Difficult" id="difficult5" value="5"> 难度非常高
+                    <input type="radio" name="Difficult" id="difficult5" value="5"> 有点难
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult6" value="6"> 比较难
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Difficult" id="difficult7" value="7"> 非常难
                 </label>
             </div>
         </form>
         </p>
         
-        <p style="font-size:14pt">4、你是否充分理解了当前的任务描述（非常清楚查询目标是什么）？
+        <p style="font-size:14pt">4、你已经充分理解了当前的任务描述（非常清楚查询目标是什么），是吗？
         <form name="question4" id="question4">
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Understand" id="yes" value="1"> 是
+                    <input type="radio" name="Understand" id="understand1" value="1"> 强烈反对
                 </label>
             </div>
             <div class="radio">
                 <label style="padding-left:30px;">
-                    <input type="radio" name="Understand" id="no" value="0"> 否
+                    <input type="radio" name="Understand" id="understand2" value="2"> 反对
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Understand" id="understand3" value="3"> 有点反对
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Understand" id="understand4" value="4"> 说不清（既不赞同也不反对）
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Understand" id="understand5" value="5"> 有点赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Understand" id="understand6" value="6"> 赞同
+                </label>
+            </div>
+            <div class="radio">
+                <label style="padding-left:30px;">
+                    <input type="radio" name="Understand" id="understand7" value="7"> 非常赞同
                 </label>
             </div>
         </form>
@@ -151,7 +206,6 @@
     function getAnswer1(){
         form = document.getElementById("question1");
         //取得radio的值
-        //TODO: make sure var familiar will not be null!
         var familiar = null;
         for (var i=0; i<form.Familiar.length; i++){
             if (form.Familiar[i].checked){
@@ -164,7 +218,6 @@
     function getAnswer2(){
         form = document.getElementById("question2");
         //取得radio的值
-        //TODO: make sure var familiar will not be null!
         var interest = null;
         for (var i=0; i<form.Interest.length; i++){
             if (form.Interest[i].checked){
@@ -177,7 +230,6 @@
     function getAnswer3(){
         form = document.getElementById("question3");
         //取得radio的值
-        //TODO: make sure var familiar will not be null!
         var difficult = null;
         for (var i=0; i<form.Difficult.length; i++){
             if (form.Difficult[i].checked){
@@ -190,7 +242,6 @@
     function getAnswer4(){
         form = document.getElementById("question4");
         //取得radio的值
-        //TODO: make sure var familiar will not be null!
         var understand = null;
         for (var i=0; i<form.Understand.length; i++){
             if (form.Understand[i].checked){

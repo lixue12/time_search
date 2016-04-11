@@ -103,15 +103,17 @@ class TimeEstimation(models.Model):
 class Time1(models.Model):
     studentID = models.CharField(max_length=50)
     task_id = models.IntegerField()
+    time = models.CharField(max_length=100)
     content = models.CharField(max_length=5000)
 
 class Prequestion(models.Model):
     studentID = models.CharField(max_length=50)
     task_id = models.IntegerField()
-    familiar = models.CharField(max_length=50)
-    interest = models.CharField(max_length=50)
-    difficult = models.CharField(max_length=50)
-    understand = models.CharField(max_length=50)
+    familiar = models.IntegerField()
+    interest = models.IntegerField()
+    difficult = models.IntegerField()
+    understand = models.IntegerField()
+    content = models.CharField(max_length=5000)
 
 class Postquestion(models.Model):
     studentID = models.CharField(max_length=50)
@@ -120,6 +122,13 @@ class Postquestion(models.Model):
     difficult = models.IntegerField()
     feeltime = models.CharField(max_length=50)
     pressure = models.CharField(max_length=50)
+    content = models.CharField(max_length=5000)
+
+class Pair_first(models.Model):
+    idx = models.IntegerField()
+    taskidx = models.IntegerField()
+    rank = models.IntegerField()
+    option = models.CharField(max_length=100)
 
 if __name__ == '__main__':
     task = Task(connect='hello world', task_id=0)

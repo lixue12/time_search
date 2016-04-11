@@ -25,6 +25,7 @@ import sys
 import urllib
 from anno.models import Task
 from anno.models import Setting
+from anno.models import Pair_first
 from copy import deepcopy
 reload(sys)
 
@@ -125,6 +126,42 @@ def tasks(request, sID,settingId):
 
     respon.set_cookie('studentID', value=sID, max_age=None, expires=None, path='/', domain=None, secure=None)
 
+    return respon
+
+def pairtasks(request, sID, settingId):
+    first = Pair_first.objects.filter(idx=int(settingId))
+    tlist = list()
+    # tlist = (taskid, query, content, option, temporal)
+    for s in first:
+        _listitem = [0,'','','','','','','']
+        setid = s.idx
+        option= s.option
+        taskidx = s.taskidx
+        query = Task.objects.get(task_id = taskidx).init_query
+        content = Task.objects.get(task_id = taskidx).content
+        topic = Task.objects.get(task_id = taskidx).audiofilename
+        
+        if option=='HIDDEN' or taskidx==0:
+            continue
+        else:
+            _listitem[3] = option
+            _listitem[0] = taskidx
+            _listitem[1] = query
+            _listitem[2] = content
+            _listitem[4] = topic
+            tlist.append(_listitem)
+    if sID == '0123456789':
+        tlist = [Task.objects.get(task_id=13)]
+    print 'len tlist', len(tlist)
+    html = template.Template(open('templates/pairtasks.html').read())
+    
+    c = template.Context({'setid':setid, 'tasks':tlist, 'tasknum':len(tlist)})
+    #print 'taskidx', taskidx, query, content, option, temporal
+    
+    respon = HttpResponse(html.render(c))
+    
+    respon.set_cookie('studentID', value=sID, max_age=None, expires=None, path='/', domain=None, secure=None)
+    
     return respon
 
 def annolist(request, taskid):

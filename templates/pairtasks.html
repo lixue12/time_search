@@ -102,7 +102,7 @@
     {% for item in tasks %}
         <div class="annotation_cell">
             <img class="check" src="/static/conf/img/check.jpg">
-            <h2> 第 {{ forloop.counter }} 个搜索任务</h2>
+            <h2> 第 {{ forloop.counter }} 组搜索任务</h2>
             <div class="annotation_discribe">
                 <p><strong>查询：</strong> {{ item.1 }}</p>
                 <dl class="dl-horizontal">
@@ -117,8 +117,6 @@
             </div>
         </div>
     {% endfor %}
-</div>
-<div class="annotation_footer">
 </div>
 
 </body>

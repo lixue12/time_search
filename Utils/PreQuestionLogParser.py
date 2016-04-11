@@ -24,7 +24,8 @@ def fromString(line):
                                               familiar=familiar,
                                               interest=interest,
                                               difficult=difficult,
-                                              understand=understand)
+                                              understand=understand,
+                                              content=line)
     print anno_log_obj
     return anno_log_obj
 

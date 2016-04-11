@@ -24,7 +24,8 @@ def fromString(line):
                                               quality=quality,
                                               difficult=difficult,
                                               feeltime=feeltime,
-                                              pressure=pressure)
+                                              pressure=pressure,
+                                              content=line)
     print anno_log_obj
     return anno_log_obj
 
