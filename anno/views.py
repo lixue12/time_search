@@ -155,7 +155,7 @@ def pairtasks(request, sID, settingId):
     print 'len tlist', len(tlist)
     html = template.Template(open('templates/pairtasks.html').read())
     
-    c = template.Context({'setid':setid, 'tasks':tlist, 'tasknum':len(tlist)})
+    c = template.Context({'setid':setid, 'tasks':tlist, 'taskrange':range(1,4)})
     #print 'taskidx', taskidx, query, content, option, temporal
     
     respon = HttpResponse(html.render(c))

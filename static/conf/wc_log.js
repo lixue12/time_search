@@ -26,7 +26,7 @@ if (studentID == "") {
 
 //var page_change_id = setInterval(page_change, 3000);
 //var mouse_tracking_id=setInterval(log_mouse_tracking, 1000);
-document.onmousemove = log_mouse_tracking;
+//document.onmousemove = log_mouse_tracking;
 send_mouse_info(formInfo("BEGIN_SEARCH", "startTime="+(new Date()).getTime()));
 
 var isTargetWindow = true;

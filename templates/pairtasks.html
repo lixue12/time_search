@@ -99,7 +99,7 @@
             </div>
         </div>
     </div>
-    {% for item in tasks %}
+    {% for i in taskrange %}
         <div class="annotation_cell">
             <img class="check" src="/static/conf/img/check.jpg">
             <h2> 第 {{ forloop.counter }} 组搜索任务</h2>
@@ -117,6 +117,8 @@
             </div>
         </div>
     {% endfor %}
+</div>
+<div class="annotation_footer">
 </div>
 
 </body>
