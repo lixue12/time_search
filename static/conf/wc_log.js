@@ -19,13 +19,11 @@ var mouse_tracking_scroll_stamp = {'scrollX': 0, 'scrollY': 0};
 var mouse_tracking_least_move_interval = 20;//ms
 var mouse_tracking_least_move_distance = 20;//px 
 
-var strcookie = document.cookie;
-var arrcookie = strcookie.split("; ");
-var studentID = arrcookie[1].split("=")[1]
+
 //for now there is no student id and query id
-if (studentID == "") {
-    studentID = 0;
-}
+//if (studentID == "") {
+//    studentID = 0;
+//}
 
 //var page_change_id = setInterval(page_change, 3000);
 //var mouse_tracking_id=setInterval(log_mouse_tracking, 1000);
