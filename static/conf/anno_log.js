@@ -5,7 +5,18 @@
 
 var strcookie = document.cookie;
 var arrcookie = strcookie.split("; ");
-var studentID = arrcookie[1].split("=")[1]
+var studentID;
+$(function () {
+    for (var i = 0 ; i < arrcookie.length ; i++) {
+        arrcookiecontent = arrcookie[i].split("=");
+        if (arrcookiecontent[0] == "studentID") {
+            studentID = arrcookiecontent[1];
+            break;
+        }
+    }
+    console.log("studentID" + studentID);
+});
+
 //if (studentID == "") {
 //    studentID = "0";
 //}
