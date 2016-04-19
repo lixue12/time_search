@@ -399,8 +399,7 @@ function over_button_to_search(){
                 }
             });
             window.onbeforeunload = null;
-            location.href = "/search/" + currentGroupID + "/" + currentTaskID + "/" + 
-                            currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
+            location.href = "/search/" + currentTaskID + "/" + currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
         }
     }
 }
