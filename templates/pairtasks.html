@@ -1,3 +1,4 @@
+{% load mathfilters %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -102,19 +103,14 @@
     {% for i in taskrange %}
         <div class="annotation_cell">
             <img class="check" src="/static/conf/img/check.jpg">
-            <h2> 第 {{ forloop.counter }} 组搜索任务</h2>
-            <div class="annotation_discribe">
-                <p><strong>查询：</strong> {{ item.1 }}</p>
-                <dl class="dl-horizontal">
-                    <dt><strong> 任务描述：</strong></dt>
-                    <dd> {{item.2}} </dd>
-                </dl>
-                <div>
-                    <a class="annotation_link"
-                    href='/pre_questionnaire/{{ item.0 }}/{{ setid }}/'
-                        target="_blank" onclick="resetTime();">点击这里开始</a>
+                <h2> 第 {{ forloop.counter }} 组搜索任务</h2>
+                <div class="annotation_discribe">
+                    <div>
+                        <a class="annotation_link"
+                        href='/pairs/{{ i }}/{{ setid }}/'
+                            target="_blank" onclick="resetTime();">点击这里开始</a>
+                    </div>
                 </div>
-            </div>
         </div>
     {% endfor %}
 </div>

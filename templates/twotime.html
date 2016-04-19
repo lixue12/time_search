@@ -1,0 +1,138 @@
+{%  load add_annotation %}
+<!DOCTYPE html>
+<!-- saved from url=(0218)http://www.sogou.com/web?query=%E5%BC%80%E5%BF%83%E4%B9%90%E5%9B%AD+%E7%BE%8A%E9%A9%BC&ie=utf8&_ast=1415606656&_asf=null&w=01029901&p=40040100&dp=1&cid=&sut=7854&sst0=1415606634628&lkt=1%2C1415606631196%2C1415606631196 -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta charset="utf-8">
+    <link rel="dns-prefetch" href="http://img01.store.sogou.com/">
+    <link rel="dns-prefetch" href="http://img02.store.sogou.com/">
+    <link rel="dns-prefetch" href="http://img03.store.sogou.com/">
+    <link rel="dns-prefetch" href="http://img04.store.sogou.com/">
+    <link rel="dns-prefetch" href="http://img01.sogoucdn.com/">
+    <link rel="dns-prefetch" href="http://img02.sogoucdn.com/">
+        <link rel = "stylesheet" href= "/static/css/jquery-ui.css" />
+    <link rel="dns-prefetch" href="http://img03.sogoucdn.com/">
+    <link rel="dns-prefetch" href="http://img04.sogoucdn.com/">
+    <link rel="shortcut icon" href="http://www.sogou.c../../../../static/images/logo/new/favicon.ico?nv=1&v=2" type="image/x-icon">
+    <link href="/static/conf/button.css" type="text/css" rel="stylesheet">
+    <link href="/static/conf/annotation.css" type="text/css" rel="stylesheet">
+    <!-- global variables: current task id, current query -->
+    <script type="text/javascript">
+        currentGroupID = "{{ groupid }}";
+        currentQuery = "{{ query }}"
+   </script>
+   	<script type="text/javascript" src="/static/conf/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery-min.js"></script>
+    <script type="text/javascript" src="/static/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/static/conf/wc_preprocess.js"></script>
+    <script type="text/javascript" src="/static/conf/wc_log.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.bgpos.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.reveal.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.raty.js"></script>
+	<script type="text/javascript" src="/static/conf/jquery.raty.min.js"></script>
+    <script type="text/javascript" src="/static/conf/anno_log.js"></script>
+    <title>搜狗搜索</title>
+
+
+<style>
+    #seekbar
+	{
+	    margin:20px;
+        width:400px;
+	}
+
+</style>
+    <style>
+        #eq > span {
+            height: 320px;
+            float: left;
+            margin: 15px
+        }
+    </style>
+    <script>
+        var jobid = {{ taskid }};
+        var docid = 0;
+        var currentTaskID = {{ taskid }};
+        $(function () {
+
+            // setup graphic EQ
+            $("#eq > span").each(function () {
+                // read initial values from markup and remove that
+                var value = parseInt($(this).text(), 10);
+                $(this).empty().slider({
+                    value: value,
+                    range: "min",
+                    animate: true,
+                    orientation: "vertical"
+                });
+            });
+
+            $("#slider-range1").slider({
+                range: true,
+                min: 0,
+                max: 60,
+                values: [0, 60],
+                slide: function (event, ui) {
+                    var time1 = ui.values[0];
+                    var time2 = ui.values[1];
+                    var second1 = time1 % 6 * 10;
+                    var second2 = time2 % 6 * 10;
+                    var minute1 = (time1-second1/10)/6;
+                    var minute2 = (time2-second2/10)/6;
+                    $("#amount1").val(minute1 + "分" + second1 + "秒 - " + minute2 + "分" + second2 + "秒");
+                }
+
+            });
+            $("#amount1").val($("#slider-range1").slider("values", 0) * 10 + "s" +
+                    " - " + $("#slider-range1").slider("values", 1) * 10 + "s");
+
+        });
+    </script>
+
+
+    <link rel="stylesheet" type="text/css" href="/static/m3.v.20.css">
+</head>
+<body class=" vr1024">
+
+<div class="annotation_header">
+    <h1 align="center">搜索花费时间估计</h1>
+    <p style="color: orangered; font-size:14pt">说明：请根据你的感觉，分别估计你刚刚完成的两个任务所花费时间的范围区间。</p>
+    <p style="color: #080300; font-size:12pt">我们为你提供了一个十分钟长的时间轴，拖动时间轴上的标尺，时间会随之变化。请将左侧标尺移动到你认为的时间区间最小值，右侧标尺移动到你认为的时间区间最大值。完成之后请点击<span style="color:red">“提交时间估计”</span>。</p>
+    <p style="color: #080300; font-size:14pt">你估计的时间花费对我们的实验非常重要，请认真估计。</p>
+    <p style="color: #080300; font-size:14pt">花费时间： 开始查询任务<--------------------> 结束浏览</p>
+
+    <div style="width:600px">
+        <p>
+            <label for="amount1">第一个任务</label>
+            <input type="text" id="amount1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+        <div id="slider-range1"></div>
+    </div>
+
+    <div style="width:600px">
+        <p>
+            <label for="amount1">第二个任务</label>
+            <input type="text" id="amount1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+        <div id="slider-range1"></div>
+    </div>
+
+    <div id = "seekbar"> </div>
+    
+    <button class="WCOverButton button blue close-reveal-modal"  type="Button" onclick="click_on_submittimeestimation();">提交时间估计</button>
+
+
+</div>
+
+<script>
+    function getRange(){
+        var rtr = "";
+        rtr += '_' + $("#slider-range1").slider("values", 0)+'_' + $("#slider-range1").slider("values", 1);
+        return rtr;
+    }
+</script>
+
+</body>
+</html>

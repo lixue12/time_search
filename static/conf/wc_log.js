@@ -63,7 +63,7 @@ $(window).scroll(function () {
     mouse_tracking_scroll_stamp.scrollY = c_top;
     mouse_tracking_pos_stamp.x = new_x;
     mouse_tracking_pos_stamp.y = new_y;
-    send_mouse_info(formInfo("SCROLL", message));
+    //send_mouse_info(formInfo("SCROLL", message));
 });
 
 window.onbeforeunload = function (e) {
@@ -100,28 +100,12 @@ $(function () {
         })
 });
 
-
-$(function () {
-    $('a')
-        .hover(function () {
-            base_link_message($(this).get(0), "HOVER", "anchor");
-        })
-
-});
-
 $(function () {
     $('a')
         .click(function () {
             base_link_message($(this).get(0), "CLICK", "anchor");
         })
 
-});
-
-$(function () {
-    $('img')
-        .hover(function () {
-            base_link_message($(this).get(0), "HOVER", "image");
-        })
 });
 
 $(function () {
@@ -353,7 +337,7 @@ $(function () {
 
 function over_button_to_anno() {
     var client_time = (new Date()).getTime();
-    send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
+    //send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
     sync_flush_log_message();
     location.href = "/post_questionnaire/" + currentTaskID + "/";
 }
@@ -364,6 +348,20 @@ function over_button_on_click_time(){
     send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
     sync_flush_log_message();
     location.href = "/taskreview/" + currentTaskID + "/";
+}
+
+function pair_to_click_time(){
+    var client_time = (new Date()).getTime();
+    send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
+    sync_flush_log_message();
+    location.href = "/twotime/" + currentGroupID + "/";
+}
+
+function back_to_pairs(){
+    var client_time = (new Date()).getTime();
+    send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
+    sync_flush_log_message();
+    window.close();
 }
 
 function over_button_to_search(){
@@ -401,7 +399,48 @@ function over_button_to_search(){
                 }
             });
             window.onbeforeunload = null;
-            location.href = "/search/" + currentTaskID + "/" + currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
+            location.href = "/search/" + currentGroupID + "/" + currentTaskID + "/" + 
+                            currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
+        }
+    }
+}
+
+function pairs_to_search(){
+    var client_time = (new Date()).getTime();
+    var message = "";
+    
+    if (getAnswer1()==null || getAnswer2()==null ||
+        getAnswer3()==null || getAnswer4()==null){
+        alert("选项不能为空！");
+        console.log("not finish questionnaire");
+    }
+    else{
+        message += "TIMESTAMP=" + client_time;
+        message += "\tUSER=" + studentID;
+        message += "\tTASK=" + currentTaskID;
+        message += "\tFAMILIAR=" + getAnswer1();
+        message += "\tINTEREST=" + getAnswer2();
+        message += "\tDIFFICULT=" + getAnswer3();
+        message += "\tUNDERSTAND=" + getAnswer4();
+        message += "\t";
+        var log_url = "http://" + server_site + ":8000/PreQuestionService/";
+        //send_mouse_info(formInfo("OVER", 'client_time=' + client_time));
+        //sync_flush_log_message();
+        //print "in search: " + currentTaskID;
+        if (confirm("你确定提交当前问卷吗？")) {
+            $.ajax({
+                type: 'POST',
+                url: log_url,
+                data: {message: message},
+                async: false,
+                complete: function (jqXHR, textStatus) {
+                    //alert(textStatus + "----" + jqXHR.status + "----" + jqXHR.readyState);
+                    //should we reset onbeforeunload here?
+                    console.log("synchronously flush time estimation")
+                }
+            });
+            window.onbeforeunload = null;
+            location.href = "/pairsearch/" + currentTaskID + "/" + currentOption + "/" + currentTemporal + "/" + currentQuery + "/1/";
         }
     }
 }
