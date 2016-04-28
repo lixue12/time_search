@@ -147,8 +147,6 @@ def tasks(request, sID,settingId):
             tlist.append(_listitem)
     if sID == '0123456789':
         tlist = [Task.objects.get(task_id=13)]
-    random.seed(int(sID))
-    random.shuffle(tlist)
     print 'len tlist', len(tlist)
 
     html = template.Template(open('templates/tasks.html').read())
